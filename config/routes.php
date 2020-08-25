@@ -39,7 +39,6 @@ $router->add('GET', '/imoveis/(\d+)/editar', 'App\Controllers\ImovelController@e
 $router->add('PUT', '/imoveis/(\d+)/editar', 'App\Controllers\ImovelController@update');
 $router->add('DELETE', '/imoveis/(\d+)/excluir', 'App\Controllers\ImovelController@destroy');
 
-
 /**
  * CONTRATOS
  */

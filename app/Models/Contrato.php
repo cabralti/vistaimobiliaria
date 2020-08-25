@@ -48,6 +48,71 @@ class Contrato extends Model
         return $this->hasOne(Imovel::class, 'id', 'imovel_id');
     }
 
+    /**
+     * Mensalidade: cobrança de aluguel que será enviada ao locatário com as taxas de aluguel, IPTU e Condomínio
+     *
+     * @return mixed
+     */
+    public function generateMonthlyFee()
+    {
+        $rentValue = floatval($this['valor_aluguel']) + floatval($this['valor_condominio']) + floatval($this['valor_iptu']);
+
+        if ($this['data_inicio'] != null) {
+            list($day, $month, $year) = explode("/", $this['data_inicio']);
+        } else {
+            $day = date("d");
+            $month = date("m");
+            $year = date("Y");
+        }
+
+        for ($x = 1; $x <= $this['vigencia']; $x++) {
+            $dueDate = date("Y-m-d", strtotime("+" . $x . " month", mktime(0, 0, 0, $month, $day, $year)));
+
+            $monthly[] = [
+                'contrato_id' => $this['id'],
+                'numero_parcela' => $x,
+                'data_vencimento' => $dueDate,
+                'valor' => $rentValue,
+                'status' => 'aguardando'
+            ];
+        }
+
+        return $monthly;
+    }
+
+    /**
+     * Repasse: valor que será repassado da imobiliária para o locador do imóvel descontando a Taxa de Administração.
+     * Aluguel e IPTU são repassados, condominio é pago pela imobiliária
+     *
+     * @return mixed
+     */
+    public function generateTransfer()
+    {
+        $transferValue = (floatval($this['valor_aluguel']) + floatval($this['valor_iptu'])) - floatval($this['taxa_administracao']);
+
+        if ($this['data_inicio'] != null) {
+            list($day, $month, $year) = explode("/", $this['data_inicio']);
+        } else {
+            $day = date("d");
+            $month = date("m");
+            $year = date("Y");
+        }
+
+        for ($x = 1; $x <= $this['vigencia']; $x++) {
+            $dueDate = date("Y-m-d", strtotime("+" . $x . " month", mktime(0, 0, 0, $month, $day, $year)));
+
+            $transfer[] = [
+                'contrato_id' => $this['id'],
+                'numero_parcela' => $x,
+                'data_vencimento' => $dueDate,
+                'valor' => $transferValue,
+                'status' => 'aguardando'
+            ];
+        }
+
+        return $transfer;
+    }
+
     public function getDataInicioAttribute($value)
     {
         return date('d/m/Y', strtotime($value));
@@ -138,7 +203,7 @@ class Contrato extends Model
      * @return string|null
      * @throws \Exception
      */
-    private function convertStringToDate($param)
+    public function convertStringToDate($param)
     {
         if (empty($param)) {
             return null;

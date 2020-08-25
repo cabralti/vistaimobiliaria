@@ -18,8 +18,18 @@
           href="<?= url("AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css") ?>">
     <!-- Theme style -->
     <link rel="stylesheet" href="<?= url("AdminLTE/dist/css/adminlte.min.css") ?>">
+    <link rel="stylesheet" href="<?= url("style.css") ?>">
 </head>
 <body class="hold-transition sidebar-mini">
+
+<div class="ajax_load">
+    <div>
+        <div class="ajax_load_box">
+            <div class="ajax_load_box_circle"></div>
+            <p class="ajax_load_box_title">Aguarde, carregando...</p>
+        </div>
+    </div>
+</div>
 
 <!-- Site wrapper -->
 <div class="wrapper">

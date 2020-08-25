@@ -21,6 +21,8 @@
 <?php $v->end(); ?>
 
 <form action="<?= url('contratos') ?>" method="post" class="form-create">
+    <input type="hidden" name="dia_repasse" id="dia_repasse" value="">
+
     <!-- Default box -->
     <div class="card">
         <div class="card-header">
@@ -175,9 +177,10 @@
                 dataType: 'json',
                 data: form_data,
                 beforeSend: function () {
-
+                    $('.ajax_load').fadeIn();
                 },
                 success: function (response) {
+                    $('.ajax_load').fadeOut();
                     Swal.fire({
                         title: response.title,
                         text: response.msg,
@@ -193,7 +196,7 @@
                     });
                 },
                 error: function (response) {
-
+                    $('.ajax_load').fadeOut();
                 }
             });
 
@@ -207,7 +210,7 @@
                 type: 'POST',
                 dataType: 'json',
                 data: {record: owner.val()},
-                beforeSend: function (){
+                beforeSend: function () {
                     $('select[name="imovel_id"]').prop('disabled', true).html('<option>Carregando...</option>');
                 },
                 success: function (response) {
@@ -217,6 +220,8 @@
         });
 
         function setFieldOwner(response) {
+            $('#dia_repasse').val(response.owner.dia_repasse);
+
             // Imóveis
             $('select[name="imovel_id"]').prop('disabled', false).html('');
             if (response.properties != null && response.properties.length) {

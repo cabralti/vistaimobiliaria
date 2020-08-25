@@ -4,7 +4,9 @@ namespace App\Controllers;
 
 use App\Models\Cliente;
 use App\Models\Contrato;
+use App\Models\Mensalidade;
 use App\Models\Proprietario;
+use App\Models\Repasse;
 use Source\Exceptions\HttpException;
 
 class ContratoController
@@ -51,11 +53,34 @@ class ContratoController
         $entity = new Contrato();
         $data = $request->request->all();
 
+        $endDate = $entity->convertStringToDate($data['data_inicio']);
+        $data['data_fim'] = date("d/m/Y", strtotime("$endDate +{$data['vigencia']}months"));
+
         try {
             $record = $entity->create($data);
 
             if (!$record) {
                 throw new \Exception('Ocorreu um erro interno na aplicação');
+            }
+
+            // Gerar mensalidade
+            $results = $entity->find($record['id'])->generateMonthlyFee();
+            if ($results) {
+                foreach ($results as $result) {
+                    Mensalidade::create($result);
+                }
+            }
+
+            // Gerar repasse
+            $contract = $entity->find($record['id']);
+            $dateConvert = $entity->convertStringToDate($contract['data_inicio']);
+            $contract['data_inicio'] = date("d/m/Y", strtotime("$dateConvert +{$contract->proprietario->dia_repasse}days"));
+
+            $results = $contract->generateTransfer();
+            if ($results) {
+                foreach ($results as $result) {
+                    Repasse::create($result);
+                }
             }
 
             $json = [
@@ -66,72 +91,6 @@ class ContratoController
                 'redirect' => url('contratos'),
                 'data' => $record
             ];
-            echo json_encode($json);
-
-        } catch (\Exception $e) {
-            $json = [
-                'error' => true,
-                'title' => 'Erro',
-                'msg' => $e->getMessage(),
-                'type' => 'error'
-            ];
-            echo json_encode($json);
-        }
-
-        return;
-    }
-
-    /**
-     * @param $container
-     * @return mixed
-     */
-    public function edit($container, $request)
-    {
-        $id = $request->attributes->get(1);
-        $owners = Proprietario::all();
-        $clients = Cliente::all();
-
-        $record = Contrato::with(['proprietario', 'cliente'])->where('id', $id)->first();
-
-        if (!$record) {
-            throw new HttpException('Registro não encontrado', 404);
-        }
-
-        return $container['view']->render('contratos/edit.php', [
-            'title' => 'Editar Contrato',
-            'record' => $record,
-            'owners' => $owners,
-            'clients' => $clients
-        ]);
-    }
-
-    /**
-     * @param $container
-     * @param $request
-     */
-    public function update($container, $request)
-    {
-        $id = $request->attributes->get(1);
-        $record = Contrato::find($id);
-
-        try {
-
-            if (!$record) {
-                throw new HttpException('Registro não encontrado', 404);
-            }
-
-            $data = $request->request->all();
-            $record->update($data);
-
-            $json = [
-                'error' => false,
-                'title' => 'Tudo certo',
-                'msg' => 'Registro atualizado com sucesso!',
-                'type' => 'success',
-                'redirect' => url('contratos'),
-                'data' => $record
-            ];
-
             echo json_encode($json);
 
         } catch (\Exception $e) {
@@ -236,6 +195,7 @@ class ContratoController
         }
 
         $json = [
+            'owner' => $owner,
             'properties' => $properties
         ];
 
