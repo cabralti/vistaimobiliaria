@@ -38,3 +38,16 @@ $router->add('POST', '/imoveis', 'App\Controllers\ImovelController@store');
 $router->add('GET', '/imoveis/(\d+)/editar', 'App\Controllers\ImovelController@edit');
 $router->add('PUT', '/imoveis/(\d+)/editar', 'App\Controllers\ImovelController@update');
 $router->add('DELETE', '/imoveis/(\d+)/excluir', 'App\Controllers\ImovelController@destroy');
+
+
+/**
+ * CONTRATOS
+ */
+$router->add('GET', '/contratos', 'App\Controllers\ContratoController@index');
+$router->add('GET', '/contratos/criar', 'App\Controllers\ContratoController@create');
+$router->add('POST', '/contratos', 'App\Controllers\ContratoController@store');
+$router->add('GET', '/contratos/(\d+)/visualizar', 'App\Controllers\ContratoController@show');
+//$router->add('GET', '/contratos/(\d+)/editar', 'App\Controllers\ContratoController@edit');
+//$router->add('PUT', '/contratos/(\d+)/editar', 'App\Controllers\ContratoController@update');
+$router->add('DELETE', '/contratos/(\d+)/excluir', 'App\Controllers\ContratoController@destroy');
+$router->add('POST', '/contratos/obter-dados-proprietario', 'App\Controllers\ContratoController@getDataOwner');

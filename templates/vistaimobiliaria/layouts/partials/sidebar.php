@@ -1,11 +1,7 @@
-
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="#" class="brand-link">
-        <img src="<?= url("AdminLTE/dist/img/AdminLTELogo.png") ?>" alt="Vista Imobiliária"
-             class="brand-image img-circle elevation-3"
-             style="opacity: .8">
+    <a href="#" class="brand-link text-center">
         <span class="brand-text font-weight-light">Vista Imobiliária</span>
     </a>
 
@@ -29,7 +25,7 @@
                         <li class="nav-item">
                             <a href="<?= url('clientes') ?>" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Consultar</p>
+                                <p>Ver Todos</p>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -52,7 +48,7 @@
                         <li class="nav-item">
                             <a href="<?= url('proprietarios') ?>" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Consultar</p>
+                                <p>Ver Todos</p>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -75,7 +71,7 @@
                         <li class="nav-item">
                             <a href="<?= url('imoveis') ?>" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Consultar</p>
+                                <p>Ver Todos</p>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -88,7 +84,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-edit"></i>
+                        <i class="nav-icon fas fa-file-contract"></i>
                         <p>
                             Contratos
                             <i class="right fas fa-angle-left"></i>
@@ -96,15 +92,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="../../index.html" class="nav-link">
+                            <a href="<?= url('contratos') ?>" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Novo</p>
+                                <p>Ver Todos</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="../../index.html" class="nav-link">
+                            <a href="<?= url('contratos/criar') ?>" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Listar todos</p>
+                                <p>Cadastrar</p>
                             </a>
                         </li>
                     </ul>

@@ -54,6 +54,7 @@
                     <div class="form-group">
                         <label for="">UF:</label>
                         <select name="uf" id="uf" class="form-control" required>
+                            <option value="">SELECIONE</option>
                             <option value="AC" <?= ($record['uf'] == 'AC') ? 'selected' : '' ?>>Acre</option>
                             <option value="AL" <?= ($record['uf'] == 'AL') ? 'selected' : '' ?>>Alagoas</option>
                             <option value="AP" <?= ($record['uf'] == 'AP') ? 'selected' : '' ?>>Amapá</option>
