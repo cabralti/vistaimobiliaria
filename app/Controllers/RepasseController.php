@@ -2,9 +2,9 @@
 
 namespace App\Controllers;
 
-use App\Models\Mensalidade;
+use App\Models\Repasse;
 
-class MensalidadeController
+class RepasseController
 {
     /**
      * Atualizando situção da mensalidade
@@ -16,15 +16,15 @@ class MensalidadeController
     {
         $id = $request->request->get('id');
         $status = $request->request->get('status');
-        $status  = ($status === 'on') ? 'paga' : 'aguardando';
+        $status  = ($status === 'on') ? 'realizado' : 'aguardando';
 
-        $record = Mensalidade::find($id);
+        $record = Repasse::find($id);
         $result = $record->update(['status' => $status]);
 
         if (!$result) {
             $json = [
                 'error' => true,
-                'msg' => 'Ocorreu um erro interno ao tentar atualizar situação da mensalidade'
+                'msg' => 'Ocorreu um erro interno ao tentar atualizar situação do repasse'
             ];
             echo json_encode($json);
             die();
@@ -32,7 +32,7 @@ class MensalidadeController
 
         $json = [
             'error' => false,
-            'msg' => "Mensalidade nº {$record['numero_parcela']} ({$record['data_vencimento']}) atualizada para: " . strtoupper($status)
+            'msg' => "Repasse nº {$record['numero_parcela']} ({$record['data_vencimento']}) atualizada para: " . strtoupper($status)
         ];
 
         echo json_encode($json);

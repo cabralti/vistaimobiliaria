@@ -52,3 +52,4 @@ $router->add('DELETE', '/contratos/(\d+)/excluir', 'App\Controllers\ContratoCont
 $router->add('POST', '/contratos/obter-dados-proprietario', 'App\Controllers\ContratoController@getDataOwner');
 
 $router->add('POST', '/mensalidades/atualizar-status', 'App\Controllers\MensalidadeController@updateStatus');
+$router->add('POST', '/repasses/atualizar-status', 'App\Controllers\RepasseController@updateStatus');

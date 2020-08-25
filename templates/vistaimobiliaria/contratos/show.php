@@ -227,6 +227,8 @@
                             <td>R$ <?= $repasse['valor'] ?></td>
                             <td>
                                 <input type="checkbox" name="checkbox-status"
+                                       data-action="<?= url('repasses/atualizar-status') ?>"
+                                       data-id="<?= $repasse['id'] ?>"
                                     <?= ($repasse['status'] == 'realizado') ? 'checked' : '' ?>
                                        data-bootstrap-switch
                                        data-on-text="REALIZADO"
@@ -268,7 +270,7 @@
         });
 
         $("input[data-bootstrap-switch]").on('switchChange.bootstrapSwitch', function (e) {
-            var status = ($(this).is(':checked')) ? 'paga' : 'aguardando';
+            var status = ($(this).is(':checked')) ? 'on' : '';
 
             $.ajax({
                 url: $(this).data('action'),
