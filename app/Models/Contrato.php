@@ -71,7 +71,9 @@ class Contrato extends Model
      */
     public function generateMonthlyFee()
     {
-        $rentValue = floatval($this['valor_aluguel']) + floatval($this['valor_condominio']) + floatval($this['valor_iptu']);
+        $rentValue = ($this->convertStringToDouble($this['valor_aluguel']))
+            + ($this->convertStringToDouble($this['valor_condominio']))
+            + ($this->convertStringToDouble($this['valor_iptu']));
 
         if ($this['data_inicio'] != null) {
             list($day, $month, $year) = explode("/", $this['data_inicio']);
@@ -88,7 +90,7 @@ class Contrato extends Model
                 'contrato_id' => $this['id'],
                 'numero_parcela' => $x,
                 'data_vencimento' => $dueDate,
-                'valor' => $rentValue,
+                'valor' => number_format($rentValue, 2, ',', '.'),
                 'status' => 'aguardando'
             ];
         }
@@ -104,7 +106,7 @@ class Contrato extends Model
      */
     public function generateTransfer()
     {
-        $transferValue = (floatval($this['valor_aluguel']) + floatval($this['valor_iptu'])) - floatval($this['taxa_administracao']);
+        $transferValue = ($this->convertStringToDouble($this['valor_aluguel']) + $this->convertStringToDouble($this['valor_iptu'])) - ($this->convertStringToDouble($this['taxa_administracao']));
 
         if ($this['data_inicio'] != null) {
             list($day, $month, $year) = explode("/", $this['data_inicio']);
@@ -121,7 +123,7 @@ class Contrato extends Model
                 'contrato_id' => $this['id'],
                 'numero_parcela' => $x,
                 'data_vencimento' => $dueDate,
-                'valor' => $transferValue,
+                'valor' =>  number_format($transferValue, 2, ',', '.'),
                 'status' => 'aguardando'
             ];
         }
