@@ -20,7 +20,7 @@
           href="<?= url("AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css") ?>">
     <!-- Theme style -->
     <link rel="stylesheet" href="<?= url("AdminLTE/dist/css/adminlte.min.css") ?>">
-    <link rel="stylesheet" href="<?= url("style.css") ?>">
+    <link rel="stylesheet" href="<?= url("assets/css/style.css") ?>">
 </head>
 <body class="hold-transition sidebar-mini">
 
@@ -82,6 +82,9 @@
 <!-- Toastr -->
 <script src="<?= url("AdminLTE/plugins/toastr/toastr.min.js") ?>"></script>
 
+<!-- MASK -->
+<script src="<?= url("assets/js/jquery.mask.js") ?>"></script>
+
 <!-- DataTables -->
 <script src="<?= url("AdminLTE/plugins/datatables/jquery.dataTables.min.js") ?>"></script>
 <script src="<?= url("AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js") ?>"></script>
@@ -89,6 +92,25 @@
 <script src="<?= url("AdminLTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js") ?>"></script>
 
 <?= $v->section('scripts') ?>
+
+<script>
+    $(function () {
+        // MASK
+        var cellMaskBehavior = function (val) {
+                return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+            },
+            cellOptions = {
+                onKeyPress: function (val, e, field, options) {
+                    field.mask(cellMaskBehavior.apply({}, arguments), options);
+                }
+            };
+        $('.mask-cell').mask(cellMaskBehavior, cellOptions);
+        $('.mask-phone').mask('(00) 0000-0000');
+        $(".mask-date").mask('00/00/0000');
+        $(".mask-zipcode").mask('00000-000', {reverse: true});
+        $(".mask-money").mask('R$ 000.000.000.000.000,00', {reverse: true, placeholder: "R$ 0,00"});
+    });
+</script>
 
 </body>
 </html>

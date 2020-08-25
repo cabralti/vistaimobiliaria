@@ -93,7 +93,7 @@
                 <div class="col-sm-12 col-md-3">
                     <div class="form-group">
                         <label for="">Data Início:</label>
-                        <input type="text" name="data_inicio" id="data_inicio" class="form-control" required>
+                        <input type="text" name="data_inicio" id="data_inicio" class="form-control mask-date" required>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-3">
@@ -118,28 +118,28 @@
                 <div class="col-sm-12 col-md-3">
                     <div class="form-group">
                         <label for="">Taxa de Administração:</label>
-                        <input type="text" name="taxa_administracao" id="taxa_administracao" class="form-control"
+                        <input type="text" name="taxa_administracao" id="taxa_administracao" class="form-control mask-money"
                                placeholder="0,00" required>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-3">
                     <div class="form-group">
                         <label for="">Valor do Aluguel:</label>
-                        <input type="text" name="valor_aluguel" id="valor_aluguel" class="form-control"
+                        <input type="text" name="valor_aluguel" id="valor_aluguel" class="form-control mask-money"
                                placeholder="0,00" required>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-3">
                     <div class="form-group">
                         <label for="">Valor do Condomínio:</label>
-                        <input type="text" name="valor_condominio" id="valor_condominio" class="form-control"
+                        <input type="text" name="valor_condominio" id="valor_condominio" class="form-control mask-money"
                                placeholder="0,00" required>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-3">
                     <div class="form-group">
                         <label for="">Valor IPTU:</label>
-                        <input type="text" name="valor_iptu" id="valor_iptu" class="form-control" placeholder="0,00"
+                        <input type="text" name="valor_iptu" id="valor_iptu" class="form-control mask-money" placeholder="0,00"
                                required>
                     </div>
                 </div>
