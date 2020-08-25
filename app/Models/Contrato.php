@@ -49,6 +49,22 @@ class Contrato extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function mensalidades()
+    {
+        return $this->hasMany(Mensalidade::class, 'contrato_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function repasses()
+    {
+        return $this->hasMany(Repasse::class, 'contrato_id', 'id');
+    }
+
+    /**
      * Mensalidade: cobrança de aluguel que será enviada ao locatário com as taxas de aluguel, IPTU e Condomínio
      *
      * @return mixed

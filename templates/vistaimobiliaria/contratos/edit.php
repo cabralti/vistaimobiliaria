@@ -86,7 +86,7 @@
         <div class="card-body">
 
             <div class="form-group">
-                <label for="">Contrato</label>
+                <label for="">Imóvel</label>
                 <select name="imovel_id" id="imovel_id" class="form-control" required>
                     <option value="">SELECIONE</option>
                 </select>
