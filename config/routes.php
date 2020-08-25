@@ -50,3 +50,5 @@ $router->add('GET', '/contratos/(\d+)/visualizar', 'App\Controllers\ContratoCont
 //$router->add('PUT', '/contratos/(\d+)/editar', 'App\Controllers\ContratoController@update');
 $router->add('DELETE', '/contratos/(\d+)/excluir', 'App\Controllers\ContratoController@destroy');
 $router->add('POST', '/contratos/obter-dados-proprietario', 'App\Controllers\ContratoController@getDataOwner');
+
+$router->add('POST', '/mensalidades/atualizar-status', 'App\Controllers\MensalidadeController@updateStatus');

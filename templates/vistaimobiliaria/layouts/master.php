@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="<?= url("AdminLTE/plugins/fontawesome-free/css/all.min.css") ?>">
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="<?= url("AdminLTE/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css") ?> ">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="<?= url("AdminLTE/plugins/toastr/toastr.min.css") ?>">
     <!-- DataTables -->
     <link rel="stylesheet" href="<?= url("AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css") ?>">
     <link rel="stylesheet"
@@ -77,6 +79,8 @@
 <script src="<?= url("AdminLTE/dist/js/adminlte.min.js") ?>"></script>
 <!-- SweetAlert2 -->
 <script src="<?= url("AdminLTE/plugins/sweetalert2/sweetalert2.min.js") ?>"></script>
+<!-- Toastr -->
+<script src="<?= url("AdminLTE/plugins/toastr/toastr.min.js") ?>"></script>
 
 <!-- DataTables -->
 <script src="<?= url("AdminLTE/plugins/datatables/jquery.dataTables.min.js") ?>"></script>

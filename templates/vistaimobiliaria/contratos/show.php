@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Detalhes do Contrato</h1>
+                <h1>Detalhes do Contrato Nº <?= $record['id'] ?></h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -180,10 +180,13 @@
                             <td><?= $mensalidade['data_vencimento'] ?></td>
                             <td>R$ <?= $mensalidade['valor'] ?></td>
                             <td>
-                                <input type="checkbox" name="my-checkbox"
+                                <input type="checkbox" name="checkbox-status"
+                                       data-action="<?= url('mensalidades/atualizar-status') ?>"
+                                       data-id="<?= $mensalidade['id'] ?>"
+                                    <?= ($mensalidade['status'] == 'paga') ? 'checked' : '' ?>
                                        data-bootstrap-switch
                                        data-on-text="PAGA"
-                                       data-off-text="<?= strtoupper($mensalidade['status']) ?>"
+                                       data-off-text="AGUARDANDO"
                                        data-off-color="danger"
                                        data-on-color="success"></td>
                         </tr>
@@ -223,10 +226,11 @@
                             <td><?= $repasse['data_vencimento'] ?></td>
                             <td>R$ <?= $repasse['valor'] ?></td>
                             <td>
-                                <input type="checkbox" name="my-checkbox"
+                                <input type="checkbox" name="checkbox-status"
+                                    <?= ($repasse['status'] == 'realizado') ? 'checked' : '' ?>
                                        data-bootstrap-switch
-                                       data-on-text="PAGA"
-                                       data-off-text="<?= strtoupper($repasse['status']) ?>"
+                                       data-on-text="REALIZADO"
+                                       data-off-text="AGUARDANDO"
                                        data-off-color="danger"
                                        data-on-color="success"></td>
                         </tr>
@@ -261,6 +265,29 @@
         <!-- Bootstrap Switch -->
         $("input[data-bootstrap-switch]").each(function () {
             $(this).bootstrapSwitch('state', $(this).prop('checked'));
+        });
+
+        $("input[data-bootstrap-switch]").on('switchChange.bootstrapSwitch', function (e) {
+            var status = ($(this).is(':checked')) ? 'paga' : 'aguardando';
+
+            $.ajax({
+                url: $(this).data('action'),
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    id: $(this).data('id'),
+                    status: status
+                },
+                success: function (response) {
+
+                    if(response.error){
+                        toastr.error(response.msg);
+                        return false;
+                    }
+
+                    toastr.success(response.msg);
+                }
+            });
         });
 
         if ($('select[name="proprietario_id"]').val() != 0) {
